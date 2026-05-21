@@ -284,7 +284,7 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 	
 	renderArea->startDateChanged ( startDate ) ;
 	renderArea->stopDateChanged ( stopDate ) ;
-	renderArea->firstApptTimeChanged ( QTime ( 10, 0 ) ) ;
+	renderArea->firstApptTimeChanged ( QTime ( 9, 0 ) ) ;
 	//------------------------------------------------------------------------------------
 	firstDayCombo->setCurrentIndex ( 1 ) ;  
 	connect ( this, SIGNAL (  dateChanged (QDate) ), renderArea, SLOT ( setDate (QDate) ) ) ; 
@@ -318,7 +318,7 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 	//====================================================================================
 	QFormLayout* form2 = new QFormLayout () ;
 	//------------------------------------------------------------------------------------
-	firstApptTimeWidget = new QTimeEdit ( QTime ( 8, 0 ), parent ) ;
+	firstApptTimeWidget = new QTimeEdit ( QTime ( 9, 0 ), parent ) ;
 	firstApptLabel = new QLabel ( tr("First Appt Time:") ) ;
 	
 	firstApptTimeWidget->setDisplayFormat ( "h ap" ) ;
@@ -355,8 +355,8 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 	
 	connect ( this, SIGNAL ( templateNumber (int) ), renderArea, SLOT ( setTemplate (int) ) ) ;
 	
-	pagesComboChanged ( 0 ) ;
-	spanComboChanged ( 0 ) ;
+	pagesCombo->setCurrentIndex ( 1 ) ;              // Two Pages
+	twoPageDayVariantsCombo->setCurrentIndex ( 1 ) ; // DIY3 Journal Left
 	firstDay = Qt::Monday ;
 	
 	emit firstDayOfWeek( firstDay ) ;
@@ -375,7 +375,7 @@ void MyWindow::pagesComboChanged ( int howMany )
 }
 ;
 void MyWindow::spanComboChanged ( int which )
-{	QDate now ;
+{
 	
 	renderArea->setSpan ( which ) ;
 	

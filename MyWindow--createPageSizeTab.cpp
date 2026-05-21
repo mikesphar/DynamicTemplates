@@ -273,22 +273,18 @@ QWidget* MyWindow::createPageTab ( QWidget* grandParent)
 	
 //	fcSizeCombo->setCurrentIndex ( 2 ) ;
 //	fcSizeComboChanged ( 2 ) ;
-	usSizeCombo->setCurrentIndex ( 5 ) ;
-	usSizeComboChanged ( 5 ) ;
+	usSizeCombo->setCurrentIndex ( 6 ) ;  // Letter
+	usSizeComboChanged ( 6 ) ;
 	
 	orientationCombo->setCurrentIndex ( 1 ) ;
 	orientationComboChanged ( 1 ) ;
 
-	// default quarter inch margins
-	topMargin->setValue ( 0.0 ) ;
-	bottomMargin->setValue ( 0.0 ) ;
-	innerMargin->setValue ( 0.6 ) ;
-	outerMargin->setValue ( 0.0 ) ;	
+	// default margins: 0.25 in on all sides
+	topMargin->setValue ( 0.25 ) ;
+	bottomMargin->setValue ( 0.25 ) ;
+	innerMargin->setValue ( 0.25 ) ;
+	outerMargin->setValue ( 0.25 ) ;
 
-	// tablet
-	theSize.setHeight ( 194 ); // mm
-	theSize.setWidth ( 140 ); // mm
-		
 	return parent ;
 } ;
 
@@ -550,13 +546,6 @@ void MyWindow::updateSize ( void  )
 	innerMargin->setSuffix ( suffix ) ;
 	outerMargin->setSuffix ( suffix ) ;
 
-	QRectF theMargins = QRectF
-	(       outerMarginValue,
-			topMarginValue,
-			theSize.width() - outerMarginValue - innerMarginValue,
-			theSize.height() - topMarginValue - bottomMarginValue
-	) ;
-	
 	emit linesChanged ( lineSpaceValue ) ;
 
 	emit pageSizeChanged

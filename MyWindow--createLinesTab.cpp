@@ -61,15 +61,15 @@ QWidget* MyWindow::createLinesTab ( QWidget* grandParent )
 	linesThickLabel = new QLabel ( tr("Line Width - 0.10 - 10.0") ) ;
 	formLayout->addRow ( linesThickLabel, penSlider ) ;
 
-	linesComboBox->setCurrentIndex ( 1 ) ;
-	linesComboBoxChanged ( 1 ) ;
-	
+	linesComboBox->setCurrentIndex ( 0 ) ;  // Wide Ruled
+	linesComboBoxChanged ( 0 ) ;
+
 	connect ( penSlider, SIGNAL ( valueChanged(int) ), this, SLOT ( penWidthSliderChanged(int) ) ) ;
 	connect ( penSlider, SIGNAL ( valueChanged(int) ), this, SLOT ( setPenWidthLabel(int) ) ) ;
 
 
-	penSlider->setValue ( 55 ) ;
-	emit penWidthChanged ( 55 ) ;
+	penSlider->setValue ( 100 ) ;  // 10.0
+	emit penWidthChanged ( 100 ) ;
 	
 	customLine->hide() ;
 
