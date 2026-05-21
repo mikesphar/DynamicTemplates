@@ -17,6 +17,7 @@
 // Otherwise, see <http://www.gnu.org/licenses/>.
 
 #include <QtGui>
+#include <QCheckBox>
 
 #include "MyWindow.h"
 
@@ -350,6 +351,18 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 	form2->addRow ( clockTypeLabel, clockType ) ;
 	//------------------------------------------------------------------------------------
 	layoutv01->addLayout ( form2, 0 ) ;
+	//====================================================================================
+	// ── Title page option ─────────────────────────────────────────────────────────────
+	QCheckBox* titlePageCheckBox = new QCheckBox ( tr("Include title page"), parent ) ;
+	connect
+	(	titlePageCheckBox,
+		SIGNAL ( toggled ( bool ) ),
+		renderArea,
+		SLOT   ( setIncludeTitlePage ( bool ) )
+	) ;
+	// setChecked(true) emits toggled(true) → renderArea->setIncludeTitlePage(true)
+	titlePageCheckBox->setChecked ( true ) ;
+	layoutv01->addWidget ( titlePageCheckBox ) ;
 	//====================================================================================
 	layoutv01->addStretch( 999 ) ;
 	

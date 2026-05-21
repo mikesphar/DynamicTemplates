@@ -174,6 +174,11 @@ void RenderArea::apptTimeTypeChanged ( int which )
 	update();
 }
 
+void RenderArea::setIncludeTitlePage ( bool include )
+{	includeTitlePage = include ;
+	// No update() needed — title page only affects PDF output, not the screen preview.
+}
+
 QSize RenderArea::minimumSize() const
 {	return QSize( (int)(thePaper.width()) / 10, (int)(thePaper.height()) / 10 );
 }

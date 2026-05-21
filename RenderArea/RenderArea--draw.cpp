@@ -56,7 +56,14 @@ void RenderArea::outputPDF ( )
 		printer->setFullPage( true ) ;
 		painter->begin ( printer ) ;
 		today = startDate ;
-		
+
+		// Render an optional title page as the first leaf so the planner
+		// pages land on correct sides when printed double-sided.
+		if ( includeTitlePage )
+		{	drawTitlePage ( painter ) ;
+			printer->newPage () ;
+		}
+
 		QProgressDialog chug ( tr("Making PDF"), tr("Cancel"), 0, startDate.daysTo ( stopDate ), this ) ;
 		chug.setWindowModality(Qt::WindowModal);
 				

@@ -58,6 +58,7 @@ public slots:
 	void outputPDF ( void ) ;
 	void outputSVG ( void ) ;
 	void setText ( QString ) ;
+	void setIncludeTitlePage ( bool ) ;
 		
 protected:
    	enum BarType { BAR_RECT, BAR_ROUND, BAR_ROUND_RIGHT, BAR_TRIANGLE_LEFT, BAR_TRIANGLE_RIGHT } ;
@@ -133,6 +134,7 @@ protected:
 	void twoPagePerYearDrawPage ( QPainter*, bool ) ;
 	void twoPagePerYearDrawOneDay ( QRectF, QDate, QPainter*, bool ) ;
 
+	void drawTitlePage ( QPainter* ) ;
 	void credits ( QPainter* ) ;
 	void TBD ( QPainter* ) ;
 
@@ -169,6 +171,7 @@ private:
 	int theStyle ;
 	int clockType ; // 0 = none, 1 = 12 hour, 2 = 24 hour
 	qreal resolution ;
+	bool includeTitlePage ;
 };
 
 #endif

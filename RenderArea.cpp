@@ -38,10 +38,12 @@ RenderArea::RenderArea(QWidget *parent) : QWidget(parent)
 	
 	printer = new QPrinter ( QPrinter::HighResolution ) ;
 	printer->setOutputFormat ( QPrinter::PdfFormat ) ;
-	
+
 //	resolution = 1.0 ;
 //	resolution = 300.0 /* dots per inch */ * 0.039370079 /* inches per millimeter */ ;
 	resolution = 1200.0 /* dots per inch */ * 0.039370079 /* inches per millimeter */ ;
+
+	includeTitlePage = true ;
 	
 	lineColors[0] = QColor (  20,  20,  20 ) ;
 	lineColors[1] = QColor (  89,  89,  89 ) ;

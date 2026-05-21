@@ -46,6 +46,7 @@ SOURCES += main.cpp \
            RenderArea/RenderArea--drawRow.cpp \
            RenderArea/RenderArea--drawShadowedRect.cpp \
            RenderArea/RenderArea--drawSubHeader.cpp \
+           RenderArea/RenderArea--drawTitlePage.cpp \
            RenderArea/RenderArea--fitRectToString.cpp \
            RenderArea/RenderArea--fitStringInRect.cpp \
            RenderArea/RenderArea--sets.cpp \
