@@ -17,7 +17,7 @@
 // Otherwise, see <http://www.gnu.org/licenses/>.
 
 
-#include <QtDebug>  // this is here for debugging 
+#include <QtDebug>  // this is here for debugging
 
 #include "RenderArea.h"
 #include <QFileDialog>
@@ -25,15 +25,21 @@
 #include <QApplication>
 #include <QDir>
 
+#if defined(Q_OS_MAC)
+#include <sys/xattr.h>
+#endif
+
 void RenderArea::outputPDF ( )
 {
 	QPainter* painter = new QPainter() ;
 	
 	printer->setOutputFormat ( QPrinter::PdfFormat ) ;
-//	printer->setPaperSize ( QPrinter::Custom ) ;
-	printer->setPaperSize ( QSizeF( thePaper.width(), thePaper.height() ), QPrinter::DevicePixel ) ;
-	
-	QRect printerRect = printer->paperRect () ;
+	{
+		qreal dotsPerMM = printer->resolution() / 25.4 ;
+		printer->setPageSize ( QPageSize (
+			QSizeF ( thePaper.width() / dotsPerMM, thePaper.height() / dotsPerMM ),
+			QPageSize::Millimeter ) ) ;
+	}
 	QString path ;
 
 #if defined(Q_OS_MAC)
@@ -88,6 +94,23 @@ void RenderArea::outputPDF ( )
 		chug.setValue ( startDate.daysTo ( stopDate ) ) ;
 
 		painter->end () ;
+
+		// Qt's QPrinter creates PDF files as read-only (0400) on macOS,
+		// which causes Preview and other apps to treat them as locked.
+		// Restore normal writable permissions after the file is written.
+		QFile::setPermissions ( fileName,
+			QFile::ReadOwner  | QFile::WriteOwner |
+			QFile::ReadGroup  |
+			QFile::ReadOther ) ;
+
+#if defined(Q_OS_MAC)
+		// macOS stamps a com.apple.quarantine extended attribute on files
+		// created by unsigned apps. Preview treats quarantined PDFs as
+		// read-only/locked. Remove the attribute so saved PDFs are
+		// immediately editable.
+		removexattr ( fileName.toUtf8().constData(), "com.apple.quarantine", 0 ) ;
+#endif
+
 		today = saveDate ;
 		setDate ( today ) ;
 	}
