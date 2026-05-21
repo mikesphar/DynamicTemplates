@@ -247,8 +247,14 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 	QFormLayout* form1 = new QFormLayout ( ) ;
 	//------------------------------------------------------------------------------------
 	form1->addRow ( tr("Week Starts on"), firstDayCombo ) ;
-	startDate = QDate::currentDate () ;
-	stopDate = QDate::currentDate () ;
+	// Default to the next full calendar month so the most common use case
+	// (generating pages for next month) requires no date adjustment.
+	{	QDate firstOfNextMonth = QDate ( QDate::currentDate().year(),
+	                                     QDate::currentDate().month(), 1
+	                                   ).addMonths ( 1 ) ;
+		startDate = firstOfNextMonth ;
+		stopDate  = firstOfNextMonth.addMonths ( 1 ).addDays ( -1 ) ;
+	}
 	//------------------------------------------------------------------------------------
 	startDateWidget = new QDateEdit ( startDate, parent ) ;
 	startDateLabel = new QLabel ( tr("First Day:") ) ;
