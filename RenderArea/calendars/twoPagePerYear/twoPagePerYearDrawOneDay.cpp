@@ -28,7 +28,6 @@ void RenderArea::twoPagePerYearDrawOneDay ( QRectF theRect, QDate drawDay, QPain
 {	painter->save() ;
 
 	QFont foo ( tr("Blue Highway") ) ;
-	QColor tempColor ;
 	QColor c2 ;
 
 	painter->setFont ( foo ) ;

@@ -27,7 +27,7 @@ void RenderArea::fitStringInRect ( QRectF theRect, QString theString, QPainter* 
 	foo.setPixelSize ( (int)(margin * theRect.height() ) ) ;
 	
 	QFontMetrics fm ( foo ) ;
-	int textWidthInPixels = fm.width( theString );
+	int textWidthInPixels = fm.horizontalAdvance( theString );
 
 	if ( textWidthInPixels > ( margin * theRect.width() ) )
 	{	foo.setStretch	( (int)( ( margin * theRect.width() * 100 ) / textWidthInPixels ) ) ;			
