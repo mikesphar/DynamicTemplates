@@ -29,7 +29,7 @@ MyWindow::MyWindow()
 	scrollArea->setWidget(renderArea);
 	scrollArea->setFrameStyle ( QFrame::Box ) ;
 
-	lineSpaceValue = 7.10 ;	
+	lineSpaceValue = 8.70 ;	// Wide Ruled default
 	isItCustom = false ;
 
 	setCentralWidget(scrollArea) ;
@@ -132,7 +132,8 @@ void MyWindow::createDockWindows()
 	connect ( this, SIGNAL ( linesChanged ( qreal ) ), renderArea, SLOT( setLineSpacing ( qreal ) ) ) ;
 	connect ( this, SIGNAL ( penWidthChanged ( int ) ), renderArea, SLOT( setPenWidth ( int ) ) ) ;
 	
-	linesComboBoxChanged ( 1 ) ;
+	linesComboBoxChanged ( 0 ) ;  // Wide Ruled — must be called after signal connections above
+	emit penWidthChanged ( 100 ) ;  // 10.0 — must be called after signal connections above
 	updateSize () ;
 	
 	toolWidget->setCurrentIndex ( 2 ) ;

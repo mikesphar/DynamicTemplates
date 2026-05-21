@@ -172,7 +172,7 @@ void RenderArea::twoPagePerDayDrawDay ( QPainter* painter, bool leftPage )
 	int howManyLines = ((int)(howManyTall - howManyFromTop)) - 4 ;
 	int howManyTaskLines = 5 * howManyLines / 6 ;
 		
-	justAbox.setBottom ( howManyTall * displayLineSpacing ) ;
+	justAbox.setBottom ( page.y() + howManyTall * displayLineSpacing ) ;
 	justAbox.setTop ( justAbox.top() + ( howManyFromTop * displayLineSpacing ) ) ;
 	
 	QRectF barRect ( justAbox.x(), justAbox.y(), justAbox.width(), displayLineSpacing ) ;
