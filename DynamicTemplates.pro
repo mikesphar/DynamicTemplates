@@ -19,8 +19,7 @@ INCLUDEPATH += .
 QT += svg
 QT += printsupport
 QT += widgets
-QMAKE_MAC_SDK=/Developer/SDKs/MacOSX10.4u.sdk
-CONFIG+= x86 ppc
+# macOS SDK and arch are auto-detected by modern Qt/Xcode
 
 # 
 # Used to check the translations
