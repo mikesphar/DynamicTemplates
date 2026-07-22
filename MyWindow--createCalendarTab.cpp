@@ -353,7 +353,7 @@ QWidget* MyWindow::createCalendarTab ( QWidget* grandParent )
 		SLOT( apptTimeTypeChanged ( int )  )
 	) ;
 	
-	clockType->setCurrentIndex ( 2 ) ;
+	clockType->setCurrentIndex ( 1 ) ;
 	form2->addRow ( clockTypeLabel, clockType ) ;
 	//------------------------------------------------------------------------------------
 	layoutv01->addLayout ( form2, 0 ) ;
