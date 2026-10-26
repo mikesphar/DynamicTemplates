@@ -34,7 +34,9 @@ void RenderArea::fitStringInRect ( QRectF theRect, QString theString, QPainter* 
 	}
 
 	painter->setFont ( foo ) ;
-	painter->drawText ( theRect, flagz, theString ) ;
+	// TextDontClip: the stretched text can still measure slightly wider than theRect on the
+	// printer/PDF device; without this Qt clips the overflow (cutting the first glyph on right-aligned text).
+	painter->drawText ( theRect, flagz | Qt::TextDontClip, theString ) ;
 	
 	painter->restore() ;
 }
