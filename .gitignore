@@ -4,3 +4,4 @@ Makefile
 diyp
 diyp.app
 moc_*
+.DS_Store

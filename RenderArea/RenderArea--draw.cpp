@@ -24,6 +24,8 @@
 #include <QProgressDialog>
 #include <QApplication>
 #include <QDir>
+#include <QFileInfo>
+#include <QSettings>
 
 #if defined(Q_OS_MAC)
 #include <sys/xattr.h>
@@ -47,11 +49,19 @@ void RenderArea::outputPDF ( )
 #else
 	path = QDir::cleanPath ( qApp->applicationDirPath() + "/DynamicTemplate.pdf" ) ;
 #endif
-	
-	QString fileName = QFileDialog::getSaveFileName	( this, tr("Save PDF File"), path, tr("Images (*.pdf)" ) ) ;	
-	
+
+	// Default to the folder used for the last successful save, if it still exists.
+	QSettings settings ( "DIYPlanner", "DynamicTemplates" ) ;
+	QString lastDir = settings.value ( "lastPdfSaveDir" ).toString() ;
+	if ( !lastDir.isEmpty() && QDir ( lastDir ).exists() )
+	{	path = QDir ( lastDir ).filePath ( "DynamicTemplate.pdf" ) ;
+	}
+
+	QString fileName = QFileDialog::getSaveFileName	( this, tr("Save PDF File"), path, tr("Images (*.pdf)" ) ) ;
+
 	if ( !( fileName.isEmpty() || fileName.isNull() ) )
-	{	printer->setOutputFileName ( fileName ) ;
+	{	settings.setValue ( "lastPdfSaveDir", QFileInfo ( fileName ).absolutePath() ) ;
+		printer->setOutputFileName ( fileName ) ;
 		QDate saveDate = today ;
 		printer->setFullPage( true ) ;
 		painter->begin ( printer ) ;
@@ -132,13 +142,23 @@ void RenderArea::outputSVG ( )
 	//	QString saveDir   
 	//	QString saveDir = QFileDialog::getExistingDirectory ( this, tr("Select or Create a folder to save to"), "", QFileDialog::ShowDirsOnly ) ;  
 	
-	svgFileName = QFileDialog::getSaveFileName 	( this, tr("Select or Create a folder to save to"), "", tr("Images (*.svg)"), 0, QFileDialog::ShowDirsOnly ) ;
-	
+	// Start in the folder used for the last successful SVG save, if it still exists.
+	QSettings settings ( "DIYPlanner", "DynamicTemplates" ) ;
+	QString startPath ;
+	QString lastDir = settings.value ( "lastSvgSaveDir" ).toString() ;
+	if ( !lastDir.isEmpty() && QDir ( lastDir ).exists() )
+	{	startPath = lastDir ;
+	}
+
+	svgFileName = QFileDialog::getSaveFileName 	( this, tr("Select or Create a folder to save to"), startPath, tr("Images (*.svg)"), 0, QFileDialog::ShowDirsOnly ) ;
+
 	svgFileCount = 0 ;
-	
+
 	if ( svgFileName.isNull() )
 	{	return ;
 	}
+
+	settings.setValue ( "lastSvgSaveDir", QFileInfo ( svgFileName ).absolutePath() ) ;
 	
 	//	svgFileName + QString(".%1.svg").arg ( svgFileCount, 3, 10, QChar('0') )
 	
